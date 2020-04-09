@@ -115,7 +115,7 @@ window.addEventListener('load', () => {
             }
         } else {
             if (!window.location.href.toString().endsWith('/')) {
-                window.open('/../', '_self');
+                window.open('/minecraft/', '_self');
             }
         }
     })();
