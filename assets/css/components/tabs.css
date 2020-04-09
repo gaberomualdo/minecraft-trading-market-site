@@ -1,0 +1,42 @@
+.tabs-container .tabs .tab {
+    display: none;
+}
+.tabs-container .tabselect {
+    display: block;
+    min-height: 2.5rem;
+    overflow: hidden;
+    margin-bottom: 0.75rem;
+    font-size: 0;
+}
+.tabs-container .tabselect .tabbtn {
+    display: inline-block;
+    height: 2.5rem;
+    line-height: calc(2.5rem - 4px);
+    padding: 0 0.75rem;
+    box-sizing: border-box;
+    border: 2px solid transparent;
+    font-size: 1.25rem;
+    border-radius: 4px;
+    margin-bottom: 0.5rem;
+    cursor: pointer;
+    user-select: none;
+    transition: border-color 0.2s;
+    margin-right: 0.75rem;
+}
+.tabs-container .tabselect .tabbtn:hover {
+    border-color: var(--white-color-sorta-transparent);
+}
+
+.tabs-container .tabselect .tabbtn.right {
+    float: right;
+}
+
+.tabs-container .tabselect .tabbtn svg {
+    fill: var(--white-color);
+    height: calc(1.5rem - 2px);
+    width: auto;
+    margin: 0.5rem 0;
+}
+.tabs-container .tabselect .tabbtn.log svg {
+    margin-top: 0.4rem;
+}

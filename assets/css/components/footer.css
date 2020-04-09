@@ -1,0 +1,23 @@
+.footer {
+    width: 100%;
+    min-height: 3rem;
+    border-top: 2px solid var(--white-color-transparent);
+    padding: 0.25rem 0;
+    box-sizing: border-box;
+    margin-top: 1.25rem;
+}
+.footer p {
+    display: block;
+    min-height: 2.5rem;
+    box-sizing: border-box;
+    line-height: 1.85rem;
+    padding: 0.25rem 0;
+    font-size: 1rem;
+    opacity: 0.75;
+}
+.footer p.left {
+    float: left;
+}
+.footer p.right {
+    float: right;
+}

@@ -1,0 +1,16 @@
+@import url('https://fonts.googleapis.com/css2?family=Noto+Sans:wght@400;700&display=swap');
+
+@import 'abstracts/variables.css';
+@import 'abstracts/global.css';
+
+@import 'components/nav.css';
+@import 'components/footer.css';
+
+@import 'components/input.css';
+@import 'components/button.css';
+
+/* fonts */
+@font-face {
+    font-family: 'Minecraft';
+    src: url('../fonts/Minecraft.otf');
+}
