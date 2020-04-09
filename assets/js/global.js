@@ -1,4 +1,4 @@
-const SERVER_BASE = 'http://localhost:7280';
+const SERVER_BASE = 'https://minecrafttradingmarket.herokuapp.com';
 
 // fire DOM event code taken from user S.Mishra from https://stackoverflow.com/questions/2490825/how-to-trigger-event-in-javascript
 function fireDOMEvent(node, eventName) {
