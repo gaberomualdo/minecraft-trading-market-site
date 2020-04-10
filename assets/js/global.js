@@ -59,6 +59,17 @@ const escapeHTML = (unsafe) => {
     return unsafe.replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;').replace(/"/g, '&quot;').replace(/'/g, '&#039;');
 };
 
+// code for this function was taken from user etham on https://stackoverflow.com/questions/36532307/rem-px-in-javascript
+const remToPx = (rem) => {
+    return rem * parseFloat(getComputedStyle(document.documentElement).fontSize);
+};
+
+// update textarea height to fit text content
+const updateTextareaHeight = (textareaElm) => {
+    textareaElm.style.height = 'auto';
+    textareaElm.style.height = textareaElm.scrollHeight + remToPx(0.25) + 'px';
+};
+
 const getCredentials = () => {
     // get credentials from local storage
     const credentials = JSON.parse(localStorage.getItem('minecraft-trading-market-credentials'));

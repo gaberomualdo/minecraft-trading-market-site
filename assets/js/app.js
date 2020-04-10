@@ -288,7 +288,7 @@ const refreshMarketItems = async () => {
             <div class='make-offer'>
                 <h1>Make An Offer</h1>
                 <p class="error"></p>
-                <textarea spellcheck="false" placeholder="Enter offer content (what you're willing to give)" class="input"></textarea>
+                <textarea spellcheck="false" placeholder="Enter offer content (what you're willing to give)" class="input" oninput='updateTextareaHeight(this)'></textarea>
                 <button class="button" onclick='makeOffer(this.parentElement, "${id}")'>${offerText}</button>
             </div>
             `;
@@ -327,65 +327,116 @@ const refreshMarketItems = async () => {
 
         return `
         <div class='market-item'>
-            <p class='date'>${mainDate}</p>
-            <div class='is-selling'>
-                <h1 class='title'><img src='assets/img/profiles/${escapeHTML(trader)}.png' alt='Profile Picture' /><span class='text'>${escapeHTML(
-            trader
-        )} is selling:</span></h1>
-                <p class='content'>${escapeHTML(name)}</p>
+            <div class='top'>
+                <p class='date'>${mainDate}</p>
+                <div class='is-selling'>
+                    <h1 class='title'><img src='assets/img/profiles/${escapeHTML(
+                        trader
+                    )}.png' alt='Profile Picture' /><span class='text'>${escapeHTML(trader)} is selling:</span></h1>
+                    <p class='content'>${escapeHTML(name)}</p>
+                </div>
+                <div class='for'>
+                    <h1 class='title'>For:</h1>
+                    <p class='content'>${escapeHTML(description).replace(/\n/g, '<br />')}</p>
+                </div>
             </div>
-            <div class='for'>
-                <h1 class='title'>For:</h1>
-                <p class='content'>${escapeHTML(description).replace(/\n/g, '<br />')}</p>
+            <div class='bottom'>
+                ${makeOfferHTML}
+                ${offersHTML}
+                ${winningOfferHTML}
             </div>
-            ${makeOfferHTML}
-            ${offersHTML}
-            ${winningOfferHTML}
         </div>
         `;
     };
 
     // loop through market items and display
+    let marketItemsHTMLByTab = {
+        completedTrades: [],
+        yourTrades: [],
+        activeTrades: [],
+    };
+
     marketItems.forEach((item) => {
         if (item.sold) {
             // put in completed trades
-            completedTradesTabElm.innerHTML += generateMarketItemHTML(
-                item._id,
-                item.name,
-                item.description,
-                item.trader,
-                item.date,
-                item.sold,
-                item.offers,
-                item.winningOffer,
-                item.hasOffer
+            marketItemsHTMLByTab.completedTrades.push(
+                generateMarketItemHTML(
+                    item._id,
+                    item.name,
+                    item.description,
+                    item.trader,
+                    item.date,
+                    item.sold,
+                    item.offers,
+                    item.winningOffer,
+                    item.hasOffer
+                )
             );
         } else if (item.trader == getCredentials().username) {
             // put in your trades
-            yourTradesTabElm.innerHTML += generateMarketItemHTML(
-                item._id,
-                item.name,
-                item.description,
-                item.trader,
-                item.date,
-                item.sold,
-                item.offers,
-                item.winningOffer,
-                item.hasOffer
+            marketItemsHTMLByTab.yourTrades.push(
+                generateMarketItemHTML(
+                    item._id,
+                    item.name,
+                    item.description,
+                    item.trader,
+                    item.date,
+                    item.sold,
+                    item.offers,
+                    item.winningOffer,
+                    item.hasOffer
+                )
             );
         } else {
             // put in active trades
-            activeTradesTabElm.innerHTML += generateMarketItemHTML(
-                item._id,
-                item.name,
-                item.description,
-                item.trader,
-                item.date,
-                item.sold,
-                item.offers,
-                item.winningOffer,
-                item.hasOffer
+            marketItemsHTMLByTab.activeTrades.push(
+                generateMarketItemHTML(
+                    item._id,
+                    item.name,
+                    item.description,
+                    item.trader,
+                    item.date,
+                    item.sold,
+                    item.offers,
+                    item.winningOffer,
+                    item.hasOffer
+                )
             );
+        }
+    });
+    Object.entries(marketItemsHTMLByTab).forEach((entry) => {
+        const tabMarketItems = entry[1];
+
+        // create grid
+        const GRID_WIDTH = 3;
+        const tabMarketItemsAsGrid = tabMarketItems.reduce(
+            (rows, key, index) => (index % GRID_WIDTH == 0 ? rows.push([key]) : rows[rows.length - 1].push(key)) && rows,
+            []
+        );
+
+        // join up arrays into final HTML
+        let tabFinalHTML = tabMarketItemsAsGrid;
+
+        tabFinalHTML.forEach((gridRow, gridRowIndex) => {
+            tabFinalHTML[gridRowIndex] = gridRow.join('');
+        });
+
+        tabFinalHTML = "<div class='row'>" + tabFinalHTML.join(`</div><div class='row'>`) + '</div>';
+
+        // put HTML into correct tab
+        const tabName = entry[0];
+        switch (tabName) {
+            case 'activeTrades':
+                return (activeTradesTabElm.innerHTML += tabFinalHTML);
+                break;
+            case 'completedTrades':
+                return (completedTradesTabElm.innerHTML += tabFinalHTML);
+                break;
+            case 'yourTrades':
+                return (yourTradesTabElm.innerHTML += tabFinalHTML);
+                break;
+            default:
+                return;
         }
     });
 };
