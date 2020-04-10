@@ -489,6 +489,10 @@ const acceptOffer = async (marketId, offerId) => {
     }
 };
 
-// start site
-refreshLogAndNotifications();
-refreshMarketItems();
+// load tabs
+(async () => {
+    await refreshLogAndNotifications();
+    await refreshMarketItems();
+
+    document.querySelector('.app').classList.remove('loading');
+})();
