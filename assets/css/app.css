@@ -1,5 +1,5 @@
-@import 'components/create-trade-modal.css';
-@import 'components/tabs.css';
+@import 'components/create-trade-modal.css?v=2';
+@import 'components/tabs.css?v=2';
 
 /* notifier */
 .notifier {
