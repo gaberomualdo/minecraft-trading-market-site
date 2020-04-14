@@ -72,9 +72,23 @@ const updateTextareaHeight = (textareaElm) => {
 
 const getCredentials = () => {
     // get credentials from local storage
-    const credentials = JSON.parse(localStorage.getItem('minecraft-trading-market-credentials'));
+    try {
+        const credentials = JSON.parse(localStorage.getItem('minecraft-trading-market-credentials'));
 
-    return credentials;
+        const requiredFields = ['username', 'pin'];
+
+        for (let i = 0; i < requiredFields.length; i++) {
+            const currentField = requiredFields[i];
+
+            if (!credentials[currentField]) {
+                throw 'Missing username or pin field(s) in local storage credentials save.';
+            }
+        }
+
+        return credentials;
+    } catch (err) {
+        return null;
+    }
 };
 
 const getAuthorizationHeader = () => {
@@ -82,7 +96,7 @@ const getAuthorizationHeader = () => {
     const credentials = getCredentials();
 
     if (!credentials) {
-        return 'denied';
+        return 'credentials not found';
     }
 
     // create authorization header
@@ -92,10 +106,16 @@ const getAuthorizationHeader = () => {
 };
 
 const verifyCredentials = async () => {
+    const authorizationHeader = getAuthorizationHeader();
+
+    if (authorizationHeader == 'credentials not found') {
+        return;
+    }
+
     const response = await fetch(SERVER_BASE + '/api/auth/', {
         method: 'GET',
         headers: new Headers({
-            Authorization: getAuthorizationHeader(),
+            Authorization: authorizationHeader,
             'Content-Type': 'application/x-www-form-urlencoded',
         }),
     });

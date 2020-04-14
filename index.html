@@ -37,8 +37,15 @@
             <form class="signin-form">
                 <h1 class="title">Sign In</h1>
                 <p class="error">Invalid Credentials</p>
-                <input type="text" placeholder="Minecraft Username (case sensitive)" name="username" class="input" spellcheck="false" />
-                <input type="password" placeholder="Pin (from Gabriel)" name="pin" class="input" spellcheck="false" />
+                <input
+                    type="text"
+                    autocomplete="username"
+                    placeholder="Minecraft Username (case sensitive)"
+                    name="username"
+                    class="input"
+                    spellcheck="false"
+                />
+                <input type="password" autocomplete="current-password" placeholder="Pin (from Gabriel)" name="pin" class="input" spellcheck="false" />
                 <input type="submit" value="Sign In" class="button" />
                 <p class="description"><strong>Forgot Pin?</strong> Contact Gabriel to restore your pin.</p>
             </form>

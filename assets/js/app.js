@@ -37,7 +37,7 @@ const displayOnNotifier = (text) => {
     usernameSpan.style.opacity = 0.65;
     signOutButton.appendChild(usernameSpan);
     signOutButton.addEventListener('click', () => {
-        localStorage.setItem('minecraft-trading-market-credentials', null);
+        localStorage.removeItem('minecraft-trading-market-credentials');
         window.open('/minecraft/', '_self');
     });
 })();
