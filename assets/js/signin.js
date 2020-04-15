@@ -27,5 +27,10 @@ formElm.addEventListener('submit', async (e) => {
             break;
         case 'servererror':
             displayError('Server Error');
+            break;
+        case 'credentialsnotfound':
+        case undefined:
+            displayError('Internal Error');
+            break;
     }
 });

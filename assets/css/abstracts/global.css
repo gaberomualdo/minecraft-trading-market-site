@@ -52,3 +52,22 @@ a:not(.styled-link):hover {
 ::selection {
     background-color: var(--white-color-transparent);
 }
+
+/* main page loader */
+body > .loader-container {
+    width: 100%;
+    height: 100vh;
+    overflow: hidden;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+}
+
+/* functionality */
+body:not(.loading) > .loader-container {
+    display: none;
+}
+body.loading > .container {
+    display: none;
+}

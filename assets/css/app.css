@@ -365,49 +365,12 @@
     opacity: 0.75;
 }
 
-/* loader */
-.loader-container {
-    display: block;
-    overflow: hidden;
-    text-align: center;
-}
-.loader-container > .loader {
-    --loader-diameter: 4rem;
-    width: var(--loader-diameter);
-    height: var(--loader-diameter);
-    border: 0.4rem solid var(--dark-color);
-    border-left-color: var(--theme-color);
-    animation-duration: 1s;
-    animation-timing-function: linear;
-    animation-iteration-count: infinite;
-    animation-name: rotate;
-    border-radius: 50%;
-    display: inline-block;
-}
+/* loader functionality */
 .app:not(.loading) > .loader-container {
     display: none;
 }
 .app.loading > .tabs {
     display: none;
-}
-
-@-moz-keyframes rotate {
-    100% {
-        -moz-transform: rotate(360deg);
-        transform: rotate(360deg);
-    }
-}
-@-webkit-keyframes rotate {
-    100% {
-        -webkit-transform: rotate(360deg);
-        transform: rotate(360deg);
-    }
-}
-@keyframes rotate {
-    100% {
-        -webkit-transform: rotate(360deg);
-        transform: rotate(360deg);
-    }
 }
 
 /* remove log and notifications tabs temporarily as they are not functional */

@@ -91,6 +91,10 @@ const getCredentials = () => {
     }
 };
 
+const setCredentials = (username, pin) => {
+    localStorage.setItem('minecraft-trading-market-credentials', JSON.stringify({ username, pin }));
+};
+
 const getAuthorizationHeader = () => {
     // get credentials
     const credentials = getCredentials();
@@ -109,7 +113,7 @@ const verifyCredentials = async () => {
     const authorizationHeader = getAuthorizationHeader();
 
     if (authorizationHeader == 'credentials not found') {
-        return;
+        return 'credentialsnotfound';
     }
 
     const response = await fetch(SERVER_BASE + '/api/auth/', {
@@ -133,21 +137,18 @@ const verifyCredentials = async () => {
     return;
 };
 
-const setCredentials = (username, pin) => {
-    localStorage.setItem('minecraft-trading-market-credentials', JSON.stringify({ username, pin }));
-};
-
 // if credentials are valid, go to logged in homepage
-window.addEventListener('load', () => {
-    (async () => {
-        if ((await verifyCredentials()) == 'accepted') {
-            if (!(window.location.href.toString().indexOf('app.html') > -1)) {
-                window.open('app.html', '_self');
-            }
-        } else {
-            if (!window.location.href.toString().endsWith('/')) {
-                window.open('/minecraft/', '_self');
-            }
+(async () => {
+    if ((await verifyCredentials()) == 'accepted') {
+        if (!(window.location.href.toString().indexOf('app.html') > -1)) {
+            window.open('app.html', '_self');
         }
-    })();
-});
+    } else {
+        if (!window.location.href.toString().endsWith('/')) {
+            window.open('/minecraft/', '_self');
+        }
+    }
+
+    // page has loaded and credentials have been checked
+    document.body.classList.remove('loading');
+})();

@@ -9,6 +9,8 @@
 @import 'components/input.css?v=2';
 @import 'components/button.css?v=2';
 
+@import 'components/loader.css?v=2';
+
 /* fonts */
 @font-face {
     font-family: 'Minecraft';
