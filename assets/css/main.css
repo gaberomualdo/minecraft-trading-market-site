@@ -1,15 +1,15 @@
 @import url('https://fonts.googleapis.com/css2?family=Noto+Sans:wght@400;700&display=swap');
 
-@import 'abstracts/variables.css?v=3';
-@import 'abstracts/global.css?v=3';
+@import 'abstracts/variables.css?v=4';
+@import 'abstracts/global.css?v=4';
 
-@import 'components/nav.css?v=3';
-@import 'components/footer.css?v=3';
+@import 'components/nav.css?v=4';
+@import 'components/footer.css?v=4';
 
-@import 'components/input.css?v=3';
-@import 'components/button.css?v=3';
+@import 'components/input.css?v=4';
+@import 'components/button.css?v=4';
 
-@import 'components/loader.css?v=3';
+@import 'components/loader.css?v=4';
 
 /* fonts */
 @font-face {
