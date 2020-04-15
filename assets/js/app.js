@@ -29,13 +29,22 @@ const displayOnNotifier = (text) => {
     window.addEventListener('scroll', checkNavType);
 })();
 
-/* sign out button functionality and text */
+/* sign out button functionality, text, and profile picture */
 (() => {
     const signOutButton = document.querySelector('.nav .right .sign-out');
+
     const usernameSpan = document.createElement('span');
     usernameSpan.innerText = ` (${getCredentials().username})`;
     usernameSpan.style.opacity = 0.65;
+
+    const profilePicture = document.createElement('img');
+    const username = getCredentials().username;
+    profilePicture.setAttribute('alt', `Profile Picture of User "${username}"`);
+    profilePicture.src = `assets/img/profiles/${username}.png`;
+
     signOutButton.appendChild(usernameSpan);
+    signOutButton.appendChild(profilePicture);
+
     signOutButton.addEventListener('click', () => {
         localStorage.removeItem('minecraft-trading-market-credentials');
         window.open('/minecraft/', '_self');
@@ -137,6 +146,10 @@ const displayOnNotifier = (text) => {
 })();
 
 // tab functionality
+
+// NOTE: Active Trades was renamed to All Trades as of 2020-04-15.
+// Any variable name corresponding to Active Trades references the All Trades tab.
+
 (() => {
     // btn elms
     const activeTradesBtn = document.querySelector('.app > .tabselect > .tabbtn.active-trades');

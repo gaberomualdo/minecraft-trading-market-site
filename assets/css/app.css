@@ -51,6 +51,21 @@
     margin-right: 1rem;
 }
 
+/* sign out button */
+.nav .button.sign-out {
+    padding-right: 3.25rem;
+    position: relative;
+    overflow: hidden;
+}
+.nav .button.sign-out img {
+    height: 2.5rem;
+    width: 2.5rem;
+    position: absolute;
+    top: 0;
+    right: 0;
+}
+
+/* modal container */
 .modal-container {
     top: 0;
     left: 0;
