@@ -372,11 +372,3 @@
 .app.loading > .tabs {
     display: none;
 }
-
-/* remove log and notifications tabs temporarily as they are not functional */
-.app > .tabs > .tab.log,
-.app > .tabs > .tab.notifications,
-.app > .tabselect > .tabbtn.notifications,
-.app > .tabselect > .tabbtn.log {
-    display: none !important;
-}

@@ -140,7 +140,6 @@ const displayOnNotifier = (text) => {
 (() => {
     // btn elms
     const activeTradesBtn = document.querySelector('.app > .tabselect > .tabbtn.active-trades');
-    const completedTradesBtn = document.querySelector('.app > .tabselect > .tabbtn.completed-trades');
     const yourTradesBtn = document.querySelector('.app > .tabselect > .tabbtn.your-trades');
     const notificationsBtn = document.querySelector('.app > .tabselect > .tabbtn.notifications');
     const logBtn = document.querySelector('.app > .tabselect > .tabbtn.log');
@@ -149,7 +148,6 @@ const displayOnNotifier = (text) => {
 
     const clearActiveTab = () => {
         appElm.classList.remove('active-trades');
-        appElm.classList.remove('completed-trades');
         appElm.classList.remove('your-trades');
         appElm.classList.remove('notifications');
         appElm.classList.remove('log');
@@ -172,13 +170,12 @@ const displayOnNotifier = (text) => {
     };
 
     activeTradesBtn.addEventListener('click', () => btnClicked('active-trades'));
-    completedTradesBtn.addEventListener('click', () => btnClicked('completed-trades'));
     yourTradesBtn.addEventListener('click', () => btnClicked('your-trades'));
     notificationsBtn.addEventListener('click', () => btnClicked('notifications'));
     logBtn.addEventListener('click', () => btnClicked('log'));
 
     // hash functionality
-    if (['active-trades', 'completed-trades', 'your-trades', 'notifications', 'log'].indexOf(window.location.hash.slice(1)) > -1) {
+    if (['active-trades', 'your-trades', 'notifications', 'log'].indexOf(window.location.hash.slice(1)) > -1) {
         btnClicked(window.location.hash.slice(1), true);
     } else {
         // default is active trades
@@ -264,11 +261,9 @@ const refreshMarketItems = async () => {
 
     // elm variables
     const activeTradesTabElm = document.querySelector('.app .tabs .active-trades');
-    const completedTradesTabElm = document.querySelector('.app .tabs .completed-trades');
     const yourTradesTabElm = document.querySelector('.app .tabs .your-trades');
 
     activeTradesTabElm.innerHTML = `<h1 class="title">Active Trades</h1>`;
-    completedTradesTabElm.innerHTML = `<h1 class="title">Completed Trades</h1>`;
     yourTradesTabElm.innerHTML = `<h1 class="title">Your Trades</h1>`;
 
     // generate market item box HTML
@@ -351,27 +346,28 @@ const refreshMarketItems = async () => {
 
     // loop through market items and display
     let marketItemsHTMLByTab = {
-        completedTrades: [],
         yourTrades: [],
         activeTrades: [],
     };
 
     marketItems.forEach((item) => {
         if (item.sold) {
-            // put in completed trades
-            marketItemsHTMLByTab.completedTrades.push(
-                generateMarketItemHTML(
-                    item._id,
-                    item.name,
-                    item.description,
-                    item.trader,
-                    item.date,
-                    item.sold,
-                    item.offers,
-                    item.winningOffer,
-                    item.hasOffer
-                )
+            const marketItemHTML = generateMarketItemHTML(
+                item._id,
+                item.name,
+                item.description,
+                item.trader,
+                item.date,
+                item.sold,
+                item.offers,
+                item.winningOffer,
+                item.hasOffer
             );
+            if (item.trader == getCredentials().username || item.winningOffer.buyer == getCredentials().username) {
+                marketItemsHTMLByTab.yourTrades.push(marketItemHTML);
+            } else {
+                marketItemsHTMLByTab.activeTrades.push(marketItemHTML);
+            }
         } else if (item.trader == getCredentials().username) {
             // put in your trades
             marketItemsHTMLByTab.yourTrades.push(
@@ -404,6 +400,11 @@ const refreshMarketItems = async () => {
             );
         }
     });
+
+    // include all your trades items in all trades as well
+    marketItemsHTMLByTab.activeTrades = marketItemsHTMLByTab.activeTrades.concat(marketItemsHTMLByTab.yourTrades);
+
+    // add all market items to HTML
     Object.entries(marketItemsHTMLByTab).forEach((entry) => {
         const tabMarketItems = entry[1];
 
@@ -428,9 +429,6 @@ const refreshMarketItems = async () => {
         switch (tabName) {
             case 'activeTrades':
                 return (activeTradesTabElm.innerHTML += tabFinalHTML);
-                break;
-            case 'completedTrades':
-                return (completedTradesTabElm.innerHTML += tabFinalHTML);
                 break;
             case 'yourTrades':
                 return (yourTradesTabElm.innerHTML += tabFinalHTML);
