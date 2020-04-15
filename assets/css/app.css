@@ -186,9 +186,12 @@
     flex-direction: column;
     justify-content: space-between;
 }
-
 .app > .tabs > .tab.market-item-list > .row > .market-item:not(:last-child) {
     margin-right: 1rem;
+}
+
+.app > .tabs > .tab.market-item-list > .row > .market-item.sold {
+    border-color: var(--red-color-transparent);
 }
 
 @media only screen and (max-width: 1000px) {

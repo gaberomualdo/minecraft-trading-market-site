@@ -334,7 +334,7 @@ const refreshMarketItems = async () => {
         }
 
         return `
-        <div class='market-item'>
+        <div class='market-item ${sold ? 'sold' : ''}'>
             <div class='top'>
                 <p class='date'>${mainDate}</p>
                 <div class='is-selling'>
