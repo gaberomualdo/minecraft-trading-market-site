@@ -119,6 +119,18 @@
     margin-bottom: 0.75rem;
 }
 
+/* tabs none message */
+.app > .tabs > .tab > .none-message {
+    font-size: 1.15rem;
+    line-height: 1.5;
+    opacity: 0.75;
+    font-style: italic;
+    text-align: center;
+}
+.app > .tabs > .tab.entrylist-tab > .none-message {
+    padding-top: 1rem;
+}
+
 /* log tab */
 .app > .tabs > .tab.entrylist-tab .entry {
     padding: 1.25rem 0;

@@ -257,6 +257,14 @@ const refreshLogAndNotifications = async () => {
     notifications.forEach((entry) => {
         notificationsTabElm.appendChild(createEntryDOMElm(entry));
     });
+
+    // display none found message if nothing in log or notifications
+    if (logEntries.length == 0) {
+        logTabElm.innerHTML += "<p class='none-message'>No Actions Logged Yet</p>";
+    }
+    if (notifications.length == 0) {
+        notificationsTabElm.innerHTML += "<p class='none-message'>You Have No Notifications Yet</p>";
+    }
 };
 
 // display trades in correct boxes
@@ -418,8 +426,23 @@ const refreshMarketItems = async () => {
     marketItemsHTMLByTab.activeTrades = marketItemsHTMLByTab.activeTrades.concat(marketItemsHTMLByTab.yourTrades);
 
     // add all market items to HTML
-    Object.entries(marketItemsHTMLByTab).forEach((entry) => {
-        const tabMarketItems = entry[1];
+    Object.entries(marketItemsHTMLByTab).forEach((currentTab) => {
+        const tabMarketItems = currentTab[1];
+        const tabName = currentTab[0];
+
+        // if none found, display error
+        if (tabMarketItems.length == 0) {
+            switch (tabName) {
+                case 'activeTrades':
+                    return (activeTradesTabElm.innerHTML += "<p class='none-message'>No Trades Yet</p>");
+                    break;
+                case 'yourTrades':
+                    return (yourTradesTabElm.innerHTML += "<p class='none-message'>You Have No Trades Yet</p>");
+                    break;
+                default:
+                    return;
+            }
+        }
 
         // create grid
         const GRID_WIDTH = 3;
@@ -438,7 +461,6 @@ const refreshMarketItems = async () => {
         tabFinalHTML = "<div class='row'>" + tabFinalHTML.join(`</div><div class='row'>`) + '</div>';
 
         // put HTML into correct tab
-        const tabName = entry[0];
         switch (tabName) {
             case 'activeTrades':
                 return (activeTradesTabElm.innerHTML += tabFinalHTML);
